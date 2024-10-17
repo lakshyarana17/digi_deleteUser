@@ -1,5 +1,5 @@
 <?php
-namespace YourVendor\AccountDeletion\Models;
+namespace Lakshya\AccountDeletion\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

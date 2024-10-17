@@ -1,5 +1,5 @@
 <?php
-namespace YourVendor\AccountDeletion;
+namespace Lakshya\AccountDeletion;
 
 use Illuminate\Support\ServiceProvider;
 
