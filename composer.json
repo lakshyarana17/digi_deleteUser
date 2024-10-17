@@ -14,10 +14,10 @@
             "email": "it@digimantra.com"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        
+            "illuminate/support": "^8.0|^9.0|^10.0|^11.0"
     },
     "scripts": {
         "post-install-cmd": [
