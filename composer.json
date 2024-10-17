@@ -1,0 +1,37 @@
+{
+    "name": "digimantra/account-deletion",
+    "description": "A Laravel package for account deletion with OTP.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Digimantra\\AccountDeletion\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lakshya",
+            "email": "it@digimantra.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "echo 'The digimantra/AccountDeletion package has been installed successfully!'"
+        ],
+        "post-update-cmd": [
+            "echo 'The digimantra/AccountDeletion package has been updated successfully!'"
+        ]
+    },
+    "extra": {
+        "laravel":{
+            "providers": [
+                "Digimantra\\AccountDeletion\\AccountDeletionServiceProvider"
+            ]
+        }
+    }
+}

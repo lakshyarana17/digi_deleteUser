@@ -1,0 +1,44 @@
+<?php
+namespace YourVendor\AccountDeletion\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cache;
+use YourVendor\AccountDeletion\Models\DeletedUser;
+use Illuminate\Support\Facades\Config;
+
+class AccountController extends Controller
+{
+    public function requestDeletion(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);  
+        $otp = rand(100000, 999999);
+        Cache::put('otp_' . $request->email, $otp, 300);
+        Mail::to($request->email)->send(new \App\Mail\OtpMail($otp));
+        return response()->json(['message' => 'OTP sent to your email.']);
+    }
+
+    public function confirmDeletion(Request $request)
+    {
+        $request->validate(['email' => 'required|email', 'otp' => 'required|digits:6']);
+        $cachedOtp = Cache::get('otp_' . $request->email);
+        if ($request->otp !== $cachedOtp) {
+            return response()->json(['message' => 'Invalid or expired OTP.'], 400);
+        }
+        $userTable = Config::get('accountdeletion.user_table');
+        $user = \DB::table($userTable)->where('email', $request->email)->first();
+        if (!$user) {
+            return response()->json(['message' => 'User not found.'], 404);
+        }
+        DeletedUser::create([
+            'email' => $user->email,
+            'name' => $user->name,
+            'deleted_data' => json_encode($user), 
+            'deleted_at' => now(),
+        ]);
+        \DB::table($userTable)->where('email', $request->email)->delete();
+        Cache::forget('otp_' . $request->email);
+        return response()->json(['message' => 'Account deleted successfully.']);
+    }
+}
