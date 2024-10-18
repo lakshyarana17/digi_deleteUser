@@ -9,11 +9,12 @@ class AccountDeletionServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/config/config.php', 'accountdeletion');
         $this->loadRoutesFrom(__DIR__.'/routes.php');
+        $this->loadMigrationsFrom(__DIR__ .'/database/migrations');
     }
 
     public function register()
     {
-        $this->publishes([__DIR__.'/database/migrations' => database_path('migrations')]);
+       
     }
 
 }
