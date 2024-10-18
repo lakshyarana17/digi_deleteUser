@@ -39,8 +39,6 @@ class AccountController extends Controller
         if (!$otpRecord || $otpRecord->otp !== $request->otp || $otpRecord->created_at->addMinutes(1) < now()) {
             return response()->json(['message' => 'Invalid or expired OTP.'], 400);
         }
-
-        // Mark the OTP as validated
         $otpRecord->validated_at = now();
         $otpRecord->save();
 

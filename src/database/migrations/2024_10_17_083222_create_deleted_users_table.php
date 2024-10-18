@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('deleted_users', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id(); 
+            $table->string('email')->unique(); 
+            $table->string('name'); 
+            $table->json('deleted_data'); // JSON column to store deleted user data
+            $table->timestamps(); 
         });
     }
 
